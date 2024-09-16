@@ -1,45 +1,54 @@
 ﻿using Renci.SshNet;
+using System;
 using System.Linq;
 
 namespace NjForward.Modules {
     public class PortForwarder {
 
-        private static SshClient SshClient;
+        private static SshClient client;
+
+        public static SshClient GetClient() {
+            return client;
+        }
 
         public static int[] GetForwardedPorts() {
-            return SshClient.ForwardedPorts.Select(x => (int)((ForwardedPortRemote)x).BoundPort).ToArray();
+            return client.ForwardedPorts.Select(x => (int)((ForwardedPortRemote)x).BoundPort).ToArray();
         }
 
         public static string GetEncryption() {
-            return SshClient.ConnectionInfo.CurrentClientEncryption;
+            return client.ConnectionInfo.CurrentClientEncryption;
         }
 
         public static string GetCompression() {
-            return SshClient.ConnectionInfo.CurrentClientCompressionAlgorithm;
+            return client.ConnectionInfo.CurrentClientCompressionAlgorithm;
         }
 
         public static bool Enabled() {
-            return SshClient != null && SshClient.IsConnected;
+            return client != null && client.IsConnected;
         }
         
         public static void Start(string host, string user, int sshPort, string password, int[] fwdPorts) {
             string localGateway = Network.GetLocalAddr();
-            SshClient = new SshClient(host, sshPort, user, password);
-            SshClient.Connect();
+            client = new SshClient(host, sshPort, user, password);
+            client.ConnectionInfo.Timeout = TimeSpan.FromMilliseconds(2000);
+            client.Connect();
             foreach (var port in fwdPorts)
-                SshClient.AddForwardedPort(new ForwardedPortRemote((uint)port, localGateway, (uint)port));
-            foreach (var port in SshClient.ForwardedPorts)
+                client.AddForwardedPort(new ForwardedPortRemote((uint)port, localGateway, (uint)port));
+            foreach (var port in client.ForwardedPorts)
                 port.Start();
         }
 
         public static void Stop() {
-            if (SshClient != null) {
-                foreach (var port in SshClient.ForwardedPorts.ToList()) {
-                    SshClient.RemoveForwardedPort(port);
-                    port.Dispose();
+            if (client != null) {
+                if (client.IsConnected) {
+                    foreach (var port in client.ForwardedPorts.ToList()) {
+                        client.RemoveForwardedPort(port);
+                        port.Dispose();
+                    }
+                    client.Disconnect();
+                    client.Dispose();
                 }
-                SshClient.Dispose();
-                SshClient = null;
+                client = null;
             }
         }
     }

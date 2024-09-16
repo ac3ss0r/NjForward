@@ -84,14 +84,15 @@ namespace NjForward
             this.externalIp_Input = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.about_Panel = new System.Windows.Forms.Panel();
-            this.about_Text = new System.Windows.Forms.Label();
-            this.logo_Image = new System.Windows.Forms.PictureBox();
-            this.acessor_Link = new System.Windows.Forms.LinkLabel();
-            this.Info_Label1 = new System.Windows.Forms.Label();
-            this.Info_Label2 = new System.Windows.Forms.Label();
-            this.server_Link = new System.Windows.Forms.LinkLabel();
-            this.Info_Label3 = new System.Windows.Forms.Label();
             this.moreInfo_Link = new System.Windows.Forms.LinkLabel();
+            this.Info_Label3 = new System.Windows.Forms.Label();
+            this.server_Link = new System.Windows.Forms.LinkLabel();
+            this.Info_Label2 = new System.Windows.Forms.Label();
+            this.Info_Label1 = new System.Windows.Forms.Label();
+            this.acessor_Link = new System.Windows.Forms.LinkLabel();
+            this.logo_Image = new System.Windows.Forms.PictureBox();
+            this.about_Text = new System.Windows.Forms.Label();
+            this.rebootServer_Button = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.vpn_Panel.SuspendLayout();
             this.fwdPorts_Panel.SuspendLayout();
@@ -439,6 +440,7 @@ namespace NjForward
             this.sshPort_Input.Name = "sshPort_Input";
             this.sshPort_Input.Size = new System.Drawing.Size(161, 20);
             this.sshPort_Input.TabIndex = 16;
+            this.sshPort_Input.Text = "22";
             this.sshPort_Input.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // name_Label
@@ -494,7 +496,7 @@ namespace NjForward
             this.save_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.save_Button.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.save_Button.ForeColor = System.Drawing.Color.White;
-            this.save_Button.Location = new System.Drawing.Point(168, 170);
+            this.save_Button.Location = new System.Drawing.Point(120, 170);
             this.save_Button.Name = "save_Button";
             this.save_Button.Size = new System.Drawing.Size(110, 27);
             this.save_Button.TabIndex = 13;
@@ -507,7 +509,7 @@ namespace NjForward
             this.del_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.del_Button.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.del_Button.ForeColor = System.Drawing.Color.White;
-            this.del_Button.Location = new System.Drawing.Point(284, 170);
+            this.del_Button.Location = new System.Drawing.Point(236, 170);
             this.del_Button.Name = "del_Button";
             this.del_Button.Size = new System.Drawing.Size(110, 27);
             this.del_Button.TabIndex = 26;
@@ -528,6 +530,7 @@ namespace NjForward
             // 
             // settings_Panel
             // 
+            this.settings_Panel.Controls.Add(this.rebootServer_Button);
             this.settings_Panel.Controls.Add(this.servers_ListBox);
             this.settings_Panel.Controls.Add(this.del_Button);
             this.settings_Panel.Controls.Add(this.save_Button);
@@ -590,6 +593,7 @@ namespace NjForward
             // scannedPorts_Box
             // 
             this.scannedPorts_Box.BackColor = System.Drawing.Color.Black;
+            this.scannedPorts_Box.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.scannedPorts_Box.ForeColor = System.Drawing.Color.White;
             this.scannedPorts_Box.Location = new System.Drawing.Point(347, 85);
             this.scannedPorts_Box.Name = "scannedPorts_Box";
@@ -621,6 +625,7 @@ namespace NjForward
             this.scanPorts_Input.Name = "scanPorts_Input";
             this.scanPorts_Input.Size = new System.Drawing.Size(167, 20);
             this.scanPorts_Input.TabIndex = 43;
+            this.scanPorts_Input.Text = "22, 80, 443";
             this.scanPorts_Input.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label7
@@ -657,6 +662,7 @@ namespace NjForward
             this.scanHost_Input.Name = "scanHost_Input";
             this.scanHost_Input.Size = new System.Drawing.Size(167, 20);
             this.scanHost_Input.TabIndex = 40;
+            this.scanHost_Input.Text = "ya.ru";
             this.scanHost_Input.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // mac_Input
@@ -762,60 +768,28 @@ namespace NjForward
             this.about_Panel.Size = new System.Drawing.Size(579, 233);
             this.about_Panel.TabIndex = 47;
             // 
-            // about_Text
+            // moreInfo_Link
             // 
-            this.about_Text.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.about_Text.ForeColor = System.Drawing.Color.LightGray;
-            this.about_Text.Location = new System.Drawing.Point(12, 11);
-            this.about_Text.Name = "about_Text";
-            this.about_Text.Size = new System.Drawing.Size(560, 34);
-            this.about_Text.TabIndex = 0;
-            this.about_Text.Text = "NjForward is a multitool to create network tunnels & forward ports on windows. Ca" +
-    "n be used for malware, games and any other needs.\r\n";
+            this.moreInfo_Link.AutoSize = true;
+            this.moreInfo_Link.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.moreInfo_Link.Location = new System.Drawing.Point(155, 64);
+            this.moreInfo_Link.Name = "moreInfo_Link";
+            this.moreInfo_Link.Size = new System.Drawing.Size(314, 15);
+            this.moreInfo_Link.TabIndex = 8;
+            this.moreInfo_Link.TabStop = true;
+            this.moreInfo_Link.Text = "https://www.ssh.com/academy/ssh/tunneling-example";
+            this.moreInfo_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.moreInfo_Link_LinkClicked);
             // 
-            // logo_Image
+            // Info_Label3
             // 
-            this.logo_Image.Image = global::NjForward.Properties.Resources.logo;
-            this.logo_Image.Location = new System.Drawing.Point(227, 93);
-            this.logo_Image.Name = "logo_Image";
-            this.logo_Image.Size = new System.Drawing.Size(119, 124);
-            this.logo_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.logo_Image.TabIndex = 1;
-            this.logo_Image.TabStop = false;
-            // 
-            // acessor_Link
-            // 
-            this.acessor_Link.AutoSize = true;
-            this.acessor_Link.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.acessor_Link.Location = new System.Drawing.Point(78, 45);
-            this.acessor_Link.Name = "acessor_Link";
-            this.acessor_Link.Size = new System.Drawing.Size(55, 15);
-            this.acessor_Link.TabIndex = 3;
-            this.acessor_Link.TabStop = true;
-            this.acessor_Link.Text = "Acessor";
-            this.acessor_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.acessor_Link_LinkClicked);
-            // 
-            // Info_Label1
-            // 
-            this.Info_Label1.AutoSize = true;
-            this.Info_Label1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.Info_Label1.ForeColor = System.Drawing.Color.LightGray;
-            this.Info_Label1.Location = new System.Drawing.Point(12, 45);
-            this.Info_Label1.Name = "Info_Label1";
-            this.Info_Label1.Size = new System.Drawing.Size(68, 15);
-            this.Info_Label1.TabIndex = 4;
-            this.Info_Label1.Text = "Created by";
-            // 
-            // Info_Label2
-            // 
-            this.Info_Label2.AutoSize = true;
-            this.Info_Label2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.Info_Label2.ForeColor = System.Drawing.Color.LightGray;
-            this.Info_Label2.Location = new System.Drawing.Point(133, 45);
-            this.Info_Label2.Name = "Info_Label2";
-            this.Info_Label2.Size = new System.Drawing.Size(23, 15);
-            this.Info_Label2.TabIndex = 5;
-            this.Info_Label2.Text = "for";
+            this.Info_Label3.AutoSize = true;
+            this.Info_Label3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.Info_Label3.ForeColor = System.Drawing.Color.LightGray;
+            this.Info_Label3.Location = new System.Drawing.Point(12, 64);
+            this.Info_Label3.Name = "Info_Label3";
+            this.Info_Label3.Size = new System.Drawing.Size(137, 15);
+            this.Info_Label3.TabIndex = 7;
+            this.Info_Label3.Text = "About port forwarding: ";
             // 
             // server_Link
             // 
@@ -829,28 +803,73 @@ namespace NjForward
             this.server_Link.Text = "SystemAdminServer";
             this.server_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.server_Link_LinkClicked);
             // 
-            // Info_Label3
+            // Info_Label2
             // 
-            this.Info_Label3.AutoSize = true;
-            this.Info_Label3.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.Info_Label3.ForeColor = System.Drawing.Color.LightGray;
-            this.Info_Label3.Location = new System.Drawing.Point(12, 64);
-            this.Info_Label3.Name = "Info_Label3";
-            this.Info_Label3.Size = new System.Drawing.Size(137, 15);
-            this.Info_Label3.TabIndex = 7;
-            this.Info_Label3.Text = "About port forwarding: ";
+            this.Info_Label2.AutoSize = true;
+            this.Info_Label2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.Info_Label2.ForeColor = System.Drawing.Color.LightGray;
+            this.Info_Label2.Location = new System.Drawing.Point(133, 45);
+            this.Info_Label2.Name = "Info_Label2";
+            this.Info_Label2.Size = new System.Drawing.Size(23, 15);
+            this.Info_Label2.TabIndex = 5;
+            this.Info_Label2.Text = "for";
             // 
-            // moreInfo_Link
+            // Info_Label1
             // 
-            this.moreInfo_Link.AutoSize = true;
-            this.moreInfo_Link.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.moreInfo_Link.Location = new System.Drawing.Point(155, 64);
-            this.moreInfo_Link.Name = "moreInfo_Link";
-            this.moreInfo_Link.Size = new System.Drawing.Size(314, 15);
-            this.moreInfo_Link.TabIndex = 8;
-            this.moreInfo_Link.TabStop = true;
-            this.moreInfo_Link.Text = "https://www.ssh.com/academy/ssh/tunneling-example";
-            this.moreInfo_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.moreInfo_Link_LinkClicked);
+            this.Info_Label1.AutoSize = true;
+            this.Info_Label1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.Info_Label1.ForeColor = System.Drawing.Color.LightGray;
+            this.Info_Label1.Location = new System.Drawing.Point(12, 45);
+            this.Info_Label1.Name = "Info_Label1";
+            this.Info_Label1.Size = new System.Drawing.Size(68, 15);
+            this.Info_Label1.TabIndex = 4;
+            this.Info_Label1.Text = "Created by";
+            // 
+            // acessor_Link
+            // 
+            this.acessor_Link.AutoSize = true;
+            this.acessor_Link.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.acessor_Link.Location = new System.Drawing.Point(78, 45);
+            this.acessor_Link.Name = "acessor_Link";
+            this.acessor_Link.Size = new System.Drawing.Size(55, 15);
+            this.acessor_Link.TabIndex = 3;
+            this.acessor_Link.TabStop = true;
+            this.acessor_Link.Text = "Acessor";
+            this.acessor_Link.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.acessor_Link_LinkClicked);
+            // 
+            // logo_Image
+            // 
+            this.logo_Image.Image = global::NjForward.Properties.Resources.logo;
+            this.logo_Image.Location = new System.Drawing.Point(227, 93);
+            this.logo_Image.Name = "logo_Image";
+            this.logo_Image.Size = new System.Drawing.Size(119, 124);
+            this.logo_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.logo_Image.TabIndex = 1;
+            this.logo_Image.TabStop = false;
+            // 
+            // about_Text
+            // 
+            this.about_Text.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.about_Text.ForeColor = System.Drawing.Color.LightGray;
+            this.about_Text.Location = new System.Drawing.Point(12, 11);
+            this.about_Text.Name = "about_Text";
+            this.about_Text.Size = new System.Drawing.Size(560, 34);
+            this.about_Text.TabIndex = 0;
+            this.about_Text.Text = "NjForward is a multitool to create network tunnels & forward ports on windows. Ca" +
+    "n be used for malware, games and any other needs.\r\n";
+            // 
+            // rebootServer_Button
+            // 
+            this.rebootServer_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rebootServer_Button.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rebootServer_Button.ForeColor = System.Drawing.Color.White;
+            this.rebootServer_Button.Location = new System.Drawing.Point(352, 170);
+            this.rebootServer_Button.Name = "rebootServer_Button";
+            this.rebootServer_Button.Size = new System.Drawing.Size(110, 27);
+            this.rebootServer_Button.TabIndex = 27;
+            this.rebootServer_Button.Text = "Reboot server";
+            this.rebootServer_Button.UseVisualStyleBackColor = true;
+            this.rebootServer_Button.Click += new System.EventHandler(this.rebootServer_Button_Click);
             // 
             // MainForm
             // 
@@ -954,6 +973,7 @@ namespace NjForward
         private System.Windows.Forms.LinkLabel acessor_Link;
         private System.Windows.Forms.Label Info_Label3;
         private System.Windows.Forms.LinkLabel moreInfo_Link;
+        private System.Windows.Forms.Button rebootServer_Button;
     }
 }
 

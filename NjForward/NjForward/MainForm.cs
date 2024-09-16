@@ -1,4 +1,6 @@
 ﻿using NjForward.Modules;
+using Renci.SshNet;
+using Renci.SshNet.Common;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -119,6 +121,24 @@ namespace NjForward {
             }
         }
 
+        private void rebootServer_Button_Click(object sender, EventArgs e) {
+            ThreadPool.QueueUserWorkItem(x => {
+                rebootServer_Button.Invoke((MethodInvoker)delegate () { rebootServer_Button.Enabled = false; });
+                try {
+                    using (var client = new SshClient(ip_Input.Text, Int32.Parse(sshPort_Input.Text), user_Input.Text, password_Input.Text)) {
+                        client.ConnectionInfo.Timeout = TimeSpan.FromMilliseconds(2000);
+                        client.Connect();
+                        client.CreateCommand("reboot").Execute();
+                        client.Disconnect();
+                    }
+                    MessageBox.Show("Reboot request sent successfully. Wait a bit while your VPS restarts.");
+                } catch (Exception ex) {
+                    MessageBox.Show("Failed to send reboot request: " + ex.Message);
+                }
+                rebootServer_Button.Invoke((MethodInvoker)delegate () { rebootServer_Button.Enabled = true; });
+            });
+        }
+
         #endregion
 
         #region VPN
@@ -132,8 +152,14 @@ namespace NjForward {
                         ConnectedSeconds = 0;
                         VpnProvider.Start(ip_Input.Text, user_Input.Text, password_Input.Text,
                                      Int32.Parse(sshPort_Input.Text), Int32.Parse(vpnPort_Input.Text));
+                        VpnProvider.GetClient().ErrorOccurred += delegate (object s, ExceptionEventArgs ex) {
+                            // Handle the case if your internet is aborted
+                            NjLog("[i] Error occured on VPN: " + ex.Exception.Message +". Shutting down...");
+                            VpnProvider.Stop();
+                            vpn_Button.Invoke((MethodInvoker)delegate () { vpn_Button.Text = "Connect"; });
+                            NjLog("[i] VPN shut down due to network error.");
+                        };
                         vpn_Button.Invoke((MethodInvoker)delegate () { vpn_Button.Text = "Disconnect"; });
-
                         vpnStatus_Label.Invoke((MethodInvoker)delegate () {
                             vpnStatus_Label.Text += VpnProvider.GetCompression() + " " + VpnProvider.GetEncryption();
                         });
@@ -166,6 +192,13 @@ namespace NjForward {
                         int[] ports = listFwdPorts_Input.Text.Split(',').Select(s => int.Parse(s)).ToArray();
                         PortForwarder.Start(ip_Input.Text, user_Input.Text, int.Parse(sshPort_Input.Text),
                                                                             password_Input.Text, ports);
+                        PortForwarder.GetClient().ErrorOccurred += delegate (object s, ExceptionEventArgs ex) {
+                            // Handle the case if your internet is aborted
+                            NjLog("[i] Error occured on port forwarding: " + ex.Exception.Message + ". Shutting down...");
+                            fwdPorts_Button.Invoke((MethodInvoker)delegate () { fwdPorts_Button.Text = "Start forwarding"; });
+                            PortForwarder.Stop();
+                            NjLog("[i] Port forwarding shut down due to network error.");
+                        };
                         fwdPorts_Button.Invoke((MethodInvoker)delegate () { fwdPorts_Button.Text = "Stop forwarding"; });
                         NjLog("[i] Port forwarding successful");
                     } else {

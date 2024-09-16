@@ -10,18 +10,22 @@ namespace NjForward.Modules {
         [DllImport("wininet.dll")]
         public static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int lpdwBufferLength);
 
-        private static SshClient SshClient;
+        private static SshClient client;
+
+        public static SshClient GetClient() {
+            return client;
+        }
 
         public static string GetEncryption() {
-            return SshClient.ConnectionInfo.CurrentClientEncryption;
+            return client.ConnectionInfo.CurrentClientEncryption;
         }
 
         public static string GetCompression() {
-            return SshClient.ConnectionInfo.CurrentClientCompressionAlgorithm;
+            return client.ConnectionInfo.CurrentClientCompressionAlgorithm;
         }
 
         public static bool Enabled() {
-            return SshClient != null && SshClient.IsConnected;
+            return client != null && client.IsConnected;
         }
 
         public static void Start(string host, string user, string password, int sshPort, int vpnPort) {
@@ -29,8 +33,8 @@ namespace NjForward.Modules {
             InternetSetOption(IntPtr.Zero, 39, IntPtr.Zero, 0); // INTERNET_OPTION_SETTINGS_CHANGED
             InternetSetOption(IntPtr.Zero, 37, IntPtr.Zero, 0); // INTERNET_OPTION_REFRESH
             // Dynamic forward port VPN
-            SshClient = new SshClient(host, sshPort, user, password);
-
+            client = new SshClient(host, sshPort, user, password);
+            client.ConnectionInfo.Timeout = TimeSpan.FromMilliseconds(2000);
             /*
             var arcfour = SshClient.ConnectionInfo.Encryptions["arcfour"];
             SshClient.ConnectionInfo.Encryptions.Clear();
@@ -41,8 +45,8 @@ namespace NjForward.Modules {
             */
 
             var Port = new ForwardedPortDynamic((uint)vpnPort);
-            SshClient.Connect();
-            SshClient.AddForwardedPort(Port);
+            client.Connect();
+            client.AddForwardedPort(Port);
             Port.Start();
 
             // Enable windows proxy
@@ -52,11 +56,14 @@ namespace NjForward.Modules {
         }
         public static void Stop() {
             // Stop forwarding
-            if (SshClient != null) {
-                foreach (var port in SshClient.ForwardedPorts.ToList())
-                    port.Dispose();
-                SshClient.Dispose();
-                SshClient = null;
+            if (client != null) {
+                if (client.IsConnected) {
+                    client.Disconnect();
+                    foreach (var port in client.ForwardedPorts.ToList())
+                        port.Dispose();
+                    client.Dispose();
+                }
+                client = null;
             }
             // Disable proxy
             RegistryKey registry = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", true);
