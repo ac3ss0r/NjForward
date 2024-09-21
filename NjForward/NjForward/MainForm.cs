@@ -154,7 +154,7 @@ namespace NjForward {
                                      Int32.Parse(sshPort_Input.Text), Int32.Parse(vpnPort_Input.Text));
                         VpnProvider.GetClient().ErrorOccurred += delegate (object s, ExceptionEventArgs ex) {
                             // Handle the case if your internet is aborted
-                            NjLog("[i] Error occured on VPN: " + ex.Exception.Message +". Shutting down...");
+                            NjLog("[i] Error occured on VPN: " + ex.Exception.Message + ". Shutting down...");
                             VpnProvider.Stop();
                             vpn_Button.Invoke((MethodInvoker)delegate () { vpn_Button.Text = "Connect"; });
                             NjLog("[i] VPN shut down due to network error.");

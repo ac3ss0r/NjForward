@@ -37,7 +37,6 @@ namespace NjForward
             this.portFwd_Item = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.logs_Item = new System.Windows.Forms.ToolStripStatusLabel();
-            this.about_Item = new System.Windows.Forms.ToolStripStatusLabel();
             this.vpn_Panel = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.vpnStatus_Label = new System.Windows.Forms.Label();
@@ -67,6 +66,7 @@ namespace NjForward
             this.del_Button = new System.Windows.Forms.Button();
             this.servers_ListBox = new System.Windows.Forms.ListBox();
             this.settings_Panel = new System.Windows.Forms.Panel();
+            this.rebootServer_Button = new System.Windows.Forms.Button();
             this.check_Timer = new System.Windows.Forms.Timer(this.components);
             this.network_Panel = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
@@ -92,7 +92,7 @@ namespace NjForward
             this.acessor_Link = new System.Windows.Forms.LinkLabel();
             this.logo_Image = new System.Windows.Forms.PictureBox();
             this.about_Text = new System.Windows.Forms.Label();
-            this.rebootServer_Button = new System.Windows.Forms.Button();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.vpn_Panel.SuspendLayout();
             this.fwdPorts_Panel.SuspendLayout();
@@ -112,7 +112,7 @@ namespace NjForward
             this.portFwd_Item,
             this.toolStripStatusLabel1,
             this.logs_Item,
-            this.about_Item});
+            this.toolStripStatusLabel2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 239);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -179,18 +179,6 @@ namespace NjForward
             this.logs_Item.Tag = "logs_Panel";
             this.logs_Item.Text = "[Logs]";
             this.logs_Item.Click += new System.EventHandler(this.onTabSelected);
-            // 
-            // about_Item
-            // 
-            this.about_Item.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.about_Item.ForeColor = System.Drawing.Color.White;
-            this.about_Item.IsLink = true;
-            this.about_Item.LinkColor = System.Drawing.Color.White;
-            this.about_Item.Name = "about_Item";
-            this.about_Item.Size = new System.Drawing.Size(48, 17);
-            this.about_Item.Tag = "about_Panel";
-            this.about_Item.Text = "[About]";
-            this.about_Item.Click += new System.EventHandler(this.onTabSelected);
             // 
             // vpn_Panel
             // 
@@ -551,6 +539,19 @@ namespace NjForward
             this.settings_Panel.TabIndex = 27;
             this.settings_Panel.Tag = "";
             // 
+            // rebootServer_Button
+            // 
+            this.rebootServer_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.rebootServer_Button.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rebootServer_Button.ForeColor = System.Drawing.Color.White;
+            this.rebootServer_Button.Location = new System.Drawing.Point(352, 170);
+            this.rebootServer_Button.Name = "rebootServer_Button";
+            this.rebootServer_Button.Size = new System.Drawing.Size(110, 27);
+            this.rebootServer_Button.TabIndex = 27;
+            this.rebootServer_Button.Text = "Reboot server";
+            this.rebootServer_Button.UseVisualStyleBackColor = true;
+            this.rebootServer_Button.Click += new System.EventHandler(this.rebootServer_Button_Click);
+            // 
             // check_Timer
             // 
             this.check_Timer.Enabled = true;
@@ -858,18 +859,17 @@ namespace NjForward
             this.about_Text.Text = "NjForward is a multitool to create network tunnels & forward ports on windows. Ca" +
     "n be used for malware, games and any other needs.\r\n";
             // 
-            // rebootServer_Button
+            // toolStripStatusLabel2
             // 
-            this.rebootServer_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.rebootServer_Button.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.rebootServer_Button.ForeColor = System.Drawing.Color.White;
-            this.rebootServer_Button.Location = new System.Drawing.Point(352, 170);
-            this.rebootServer_Button.Name = "rebootServer_Button";
-            this.rebootServer_Button.Size = new System.Drawing.Size(110, 27);
-            this.rebootServer_Button.TabIndex = 27;
-            this.rebootServer_Button.Text = "Reboot server";
-            this.rebootServer_Button.UseVisualStyleBackColor = true;
-            this.rebootServer_Button.Click += new System.EventHandler(this.rebootServer_Button_Click);
+            this.toolStripStatusLabel2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripStatusLabel2.ForeColor = System.Drawing.Color.White;
+            this.toolStripStatusLabel2.IsLink = true;
+            this.toolStripStatusLabel2.LinkColor = System.Drawing.Color.White;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(48, 17);
+            this.toolStripStatusLabel2.Tag = "about_Panel";
+            this.toolStripStatusLabel2.Text = "[About]";
+            this.toolStripStatusLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
@@ -913,7 +913,6 @@ namespace NjForward
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel about_Item;
         private System.Windows.Forms.ToolStripStatusLabel settings_Item;
         private System.Windows.Forms.ToolStripStatusLabel portFwd_Item;
         private System.Windows.Forms.ToolStripStatusLabel vpn_Item;
@@ -974,6 +973,7 @@ namespace NjForward
         private System.Windows.Forms.Label Info_Label3;
         private System.Windows.Forms.LinkLabel moreInfo_Link;
         private System.Windows.Forms.Button rebootServer_Button;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
     }
 }
 
