@@ -870,6 +870,7 @@ namespace NjForward
             this.toolStripStatusLabel2.Tag = "about_Panel";
             this.toolStripStatusLabel2.Text = "[About]";
             this.toolStripStatusLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripStatusLabel2.Click += new System.EventHandler(this.onTabSelected);
             // 
             // MainForm
             // 
