@@ -1,4 +1,4 @@
-# *NjForward
+# NjForward
 
 <div align=center style="background-color: transparent;">
 	<img src="preview.png"/>
